@@ -45,7 +45,7 @@ for (let i = 0; i < process.argv.length; i++) {
   // here we're using a new function, typeof(), we'll get into this more later,
   // but for now just know that it returns the type of whatever value is passed (like 'number', 'string', 'object')
   // See https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof for more information
-  console.log(`the type of process.argv[${i}] is ${typeof(process.argv[i])}\n`)
+  console.log(`the type of process.argv[${i}] "${process.argv[i]}" is ${typeof(process.argv[i])}\n`)
 }
 
 console.log(`if you want to pass numbers to your program, be sure to parse them!\n`)
