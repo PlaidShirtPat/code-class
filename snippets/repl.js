@@ -1,24 +1,27 @@
 
-
-// write our prompt
-function writePrompt() {
-  process.stdout.write('enter input: ')
+// Special function to read input from stdin
+function readLine() {
+  return new Promise(resolve => {
+    process.stdin.once('readable', () => {
+      let chunk = process.stdin.read();
+      resolve(chunk.toString().trimEnd());
+    });
+  });
 }
 
-// simple example of function that handles a command
-function handlePing() {
-  process.stdout.write('pong\n')
-}
+// Our main function. Contains the top-level program logic
+async function main() {
+  process.stdout.write('type input into the program, hit <ctrl+c> to exit\n\n');
 
-// our event handler for input from stdin
-function onData(chunk) {
-  //remove whitespace from end of input
-  let input = chunk.toString().trimEnd()
+  while (true) {
 
-  if (input !== null) {
+    process.stdout.write('enter input: ')
+    let input = await readLine();
+    console.log(`input = "${input}"`);
+
     switch(input) {
       case 'ping':
-        handlePing()
+        process.stdout.write('pong\n')
         break;
 
       case 'quit':
@@ -31,19 +34,7 @@ function onData(chunk) {
         process.stdout.write('unrecognized command, try again.\n')
     }
   }
-
-  writePrompt()
 }
 
-// setup code
-// set input encoding
-process.stdin.setEncoding('utf8')
-// add data handler on stdin
-process.stdin.on('data', onData)
-// open stdin
-process.stdin.resume()
-// write initial message
-process.stdout.write('type input into the program, hit <ctrl+c> to exit\n\n');
-
-// write first input prompt
-writePrompt()
+// call our main function
+main();
